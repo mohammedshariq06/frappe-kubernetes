@@ -18,3 +18,22 @@ Ensure you have the following tools and resources:
 ## 🧱 Step 1: Set Up MariaDB Database
 
 ERPNext requires MariaDB as its backend database. Deploy it with Helm:
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+helm install erpnext-db bitnami/mariadb \
+  --namespace erpnext \
+  --set auth.rootPassword=erpnextrootpass \
+  --set auth.password=erpnextdbpass \
+  --set persistence.enabled=true \
+  --set persistence.size=10Gi
+```
+Verify that the database is running:
+
+```bash
+kubectl get pods -l app.kubernetes.io/name=mariadb
+```
+
+Explanation:
+`kubectl get pods -l app.kubernetes.io/name=mariadb`: Lists all pods with the label app.kubernetes.io/name=mariadb to ensure the MariaDB database is running.
